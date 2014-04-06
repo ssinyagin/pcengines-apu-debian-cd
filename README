@@ -5,13 +5,26 @@ Introduction
 ------------
 
 This is a set of configuration files for building a Debian installation
-CD optimized for the APU platform of PC Engines (www.pcengines.ch).
+CD optimized for the APU platform of PC Engines:
+http://www.pcengines.ch/apu.htm
 
 The build machine can be Debian Wheezy of amd64 or i386 architecture.
 
-Before using these scripts, have a look at the profile/apu.* files, and
+Before using these scripts, have a look at the profiles/apu.* files, and
 you may want to change some options. Create your own profile name in
 this case.
+
+The default hostname is set to "apu", unless DHCP delivers a different
+name.
+
+The default disk layout does not allocate a swap partition (the APU
+board has 2 or 4GB RAM).
+
+The partition layout in profiles/apu.preseed contains the option
+"discard" for the root filesystem, but this option is first supported in
+partman-ext3 version 79. Wheezy has version 74, so you need to edit
+/etc/fstab manually. The next release, Jessie, will support the discard
+option.
 
 See also SSD optimization tips:
 https://wiki.freeswitch.org/wiki/SSD_Tuning_for_Linux
@@ -32,8 +45,8 @@ mkdir /opt/pcengines
 cd /opt/pcengines
 git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
 
-## build the CD (may take a while)
-build-simple-cdd --profiles apu --dist wheezy --force-root 
+## build the installation CD image
+build-simple-cdd --profiles apu --dist wheezy --force-root
 
 ## insert the USB stick into the build machine
 
@@ -47,6 +60,17 @@ dd if=images/debian-7.4-i386-CD-1.iso of=/dev/sdc bs=1M
 ## The terminal emulator should be vt220 or xterm (vt100 does not have
 ## F12).  When the prompt for F12 appears, press F12 and select your USB
 ## stick as boot source.
+
+
+
+TO DO
+-----
+
+The build procedure for Jessie fails, need to figure out why:
+ build-simple-cdd --profiles apu --dist jessie  --force-root
+
+
+
 
 
 Author
