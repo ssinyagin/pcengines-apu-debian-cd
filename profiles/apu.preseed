@@ -1,0 +1,36 @@
+
+
+# Skip creation of a normal user account.
+d-i passwd/make-user boolean false
+
+
+# Any hostname and domain names assigned from dhcp take precedence over
+# values set here. However, setting the values still prevents the questions
+# from being shown, even if values come from dhcp.
+d-i netcfg/get_hostname string apu
+
+
+# Enable the disk labeling by default
+d-i partman/confirm_write_new_label boolean true
+d-i partman/choose_partition select Finish partitioning and write changes to disk
+d-i partman/confirm   boolean true
+
+# Disk partitioning method
+d-i partman-auto/method string regular
+
+d-i partman-auto/expert_recipe string                         \
+      boot-root ::                                            \
+              40 50 100 ext3                                  \
+                      $primary{ } $bootable{ }                \
+                      method{ format } format{ }              \
+                      use_filesystem{ } filesystem{ ext3 }    \
+                      mountpoint{ /boot }                     \
+                      options/noatime{ noatime }              \
+              .                                               \
+              500 10000 1000000000 ext4                       \
+                      method{ format } format{ }              \
+                      use_filesystem{ } filesystem{ ext4 }    \
+                      mountpoint{ / }                         \
+                      options/noatime{ noatime }              \
+                      options/discard{ discard }              \
+              .

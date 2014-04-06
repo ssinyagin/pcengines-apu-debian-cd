@@ -1,0 +1,55 @@
+Debian installer CD for PC Engines APU board with mSATA drive
+=============================================================
+
+Introduction
+------------
+
+This is a set of configuration files for building a Debian installation
+CD optimized for the APU platform of PC Engines (www.pcengines.ch).
+
+The build machine can be Debian Wheezy of amd64 or i386 architecture.
+
+Before using these scripts, have a look at the profile/apu.* files, and
+you may want to change some options. Create your own profile name in
+this case.
+
+See also SSD optimization tips:
+https://wiki.freeswitch.org/wiki/SSD_Tuning_for_Linux
+https://wiki.debian.org/SSDOptimization
+
+
+Installation
+------------
+
+Build the CD image on the build machine:
+
+## install prerequisites
+apt-get update
+apt-get install -y simple-cdd git
+
+## get our latest files
+mkdir /opt/pcengines
+cd /opt/pcengines
+git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
+
+## build the CD (may take a while)
+build-simple-cdd --profiles apu --dist wheezy --force-root 
+
+## insert the USB stick into the build machine
+
+## check where your USB stick is
+fdisk -l
+
+## copy the installer CD image
+dd if=images/debian-7.4-i386-CD-1.iso of=/dev/sdc bs=1M
+
+## insert the USB stick into APU board and connect the serial terminal
+## The terminal emulator should be vt220 or xterm (vt100 does not have
+## F12).  When the prompt for F12 appears, press F12 and select your USB
+## stick as boot source.
+
+
+Author
+------
+Stanislav Sinyagin
+ssinyagin@k-open.com

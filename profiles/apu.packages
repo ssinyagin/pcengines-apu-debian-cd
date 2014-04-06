@@ -1,0 +1,10 @@
+openssh-server
+ntp
+firmware-realtek
+firmware-brcm80211
+firmware-atheros
+firmware-ralink
+wireless-tools
+wpasupplicant
+iw
+
