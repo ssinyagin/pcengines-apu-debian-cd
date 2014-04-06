@@ -8,6 +8,10 @@ This is a set of configuration files for building a Debian installation
 CD optimized for the APU platform of PC Engines:
 http://www.pcengines.ch/apu.htm
 
+This installation is only intended for an mSATA drive on the APU
+board. If you plan to boot from SD card, use Voyage Linux instead:
+http://linux.voyage.hk/
+
 The build machine can be Debian Wheezy of amd64 or i386 architecture.
 
 Before using these scripts, have a look at the profiles/apu.* files, and
