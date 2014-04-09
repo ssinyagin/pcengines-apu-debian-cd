@@ -22,7 +22,7 @@ d-i partman-auto/method string regular
 # Custom partition layout: both /boot and root in ext4, with noatime option
 d-i partman-auto/expert_recipe string                         \
       boot-root ::                                            \
-              40 50 100 ext4                                  \
+              128 50 128 ext4                                 \
                       $primary{ } $bootable{ }                \
                       method{ format } format{ }              \
                       use_filesystem{ } filesystem{ ext4 }    \
@@ -45,6 +45,11 @@ d-i partman-lvm/confirm boolean true
 d-i partman-auto/init_automatically_partition       select  Guided - use entire disk
 
 d-i grub-installer/with_other_os  boolean false
+
+
+# The kernel image (meta) package to be installed; "none" can be used if no
+# kernel is to be installed.
+d-i base-installer/kernel/image string linux-image-686-pae
 
 
 # Some versions of the installer can report back on what software you have
