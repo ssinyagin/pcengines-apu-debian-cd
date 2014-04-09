@@ -14,21 +14,20 @@ http://linux.voyage.hk/
 
 The build machine can be Debian Wheezy of amd64 or i386 architecture.
 
-Before using these scripts, have a look at the profiles/apu.* files, and
-you may want to change some options. Create your own profile name in
-this case.
+Before using these scripts, have a look at the files in profiles/, and
+you may want to change some options.
 
 The default hostname is set to "apu", unless DHCP delivers a different
 name.
 
-The default disk layout does not allocate a swap partition (the APU
-board has 2 or 4GB RAM).
+The disk layout does not allocate a swap partition (the APU board has 2
+or 4GB RAM). If you need swap, you can add a swapfile in root
+partition. The system is optimized for minimal swap usage:
+vm.swappiness=1 in /etc/sysctl.d/pcengines_apu.conf
 
-The partition layout in profiles/apu.preseed contains the option
-"discard" for the root filesystem, but this option is first supported in
-partman-ext3 version 79. Wheezy has version 74, so you need to edit
-/etc/fstab manually. The next release, Jessie, will support the discard
-option.
+The profile adds an hourly cronjob
+(/etc/cron.hourly/pcengines_apu.fstrim) which performs fstrim command on
+root and boot partitions once a day.
 
 See also SSD optimization tips:
 https://wiki.freeswitch.org/wiki/SSD_Tuning_for_Linux
@@ -37,6 +36,13 @@ https://wiki.debian.org/SSDOptimization
 
 Installation
 ------------
+
+WARNING: this is a fully automated installation. Once you boot from the
+USB stick, it will only give you 5 seconds in the initial menu, and the
+rest will be done automatically, and a new Debian system will be
+installed on mSATA SSD drive.
+
+!!! ALL EXISTING DATA ON THE DRIVE WILL BE LOST !!!
 
 Build the CD image on the build machine:
 
@@ -50,7 +56,7 @@ cd /opt/pcengines
 git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
 
 ## build the installation CD image
-build-simple-cdd --profiles apu --dist wheezy --force-root
+build-simple-cdd --conf profiles/apu.conf --dist wheezy --force-root
 
 ## insert the USB stick into the build machine
 
@@ -65,16 +71,16 @@ dd if=images/debian-7.4-i386-CD-1.iso of=/dev/sdc bs=1M
 ## F12).  When the prompt for F12 appears, press F12 and select your USB
 ## stick as boot source.
 
+## In the boot menu, "Install" will do automatic installation.
 
+## ignore the error message and wait 30 seconds. I did not yet manage to
+##   go around it:
+Undefined video mode number: 314
+Press <ENTER> to see video modes available, <SPACE> to continue, or wait 30 sec
 
-TO DO
------
-
-The build procedure for Jessie fails, need to figure out why:
- build-simple-cdd --profiles apu --dist jessie  --force-root
-
-
-
+## The installation continues, and you will get a new system within a
+## couple of minutes. The APU will automatically reboot after the
+## installation.
 
 
 Author

@@ -1,4 +1,5 @@
-
+# set the deadline scheduler globally for better SSD performance
+d-i debian-installer/add-kernel-opts string video=off elevator=deadline
 
 # Skip creation of a normal user account.
 d-i passwd/make-user boolean false
@@ -18,12 +19,13 @@ d-i partman/confirm   boolean true
 # Disk partitioning method
 d-i partman-auto/method string regular
 
+# Custom partition layout: both /boot and root in ext4, with noatime option
 d-i partman-auto/expert_recipe string                         \
       boot-root ::                                            \
-              40 50 100 ext3                                  \
+              40 50 100 ext4                                  \
                       $primary{ } $bootable{ }                \
                       method{ format } format{ }              \
-                      use_filesystem{ } filesystem{ ext3 }    \
+                      use_filesystem{ } filesystem{ ext4 }    \
                       mountpoint{ /boot }                     \
                       options/noatime{ noatime }              \
               .                                               \
@@ -32,5 +34,48 @@ d-i partman-auto/expert_recipe string                         \
                       use_filesystem{ } filesystem{ ext4 }    \
                       mountpoint{ / }                         \
                       options/noatime{ noatime }              \
-                      options/discard{ discard }              \
               .
+
+# Skip question about not having swap partition
+partman-basicfilesystems partman-basicfilesystems/no_swap boolean false
+
+d-i partman-auto/disk string /dev/sda
+d-i partman-auto/purge_lvm_from_device boolean true
+d-i partman-lvm/confirm boolean true
+d-i partman-auto/init_automatically_partition       select  Guided - use entire disk
+
+d-i grub-installer/with_other_os  boolean false
+
+
+# Some versions of the installer can report back on what software you have
+# installed, and what software you use. The default is not to report back,
+# but sending reports helps the project determine what software is most
+# popular and include it on CDs.
+popularity-contest popularity-contest/participate boolean false
+
+#####
+## Things you may want to change ##
+
+d-i debian-installer/locale string en_US.UTF-8
+d-i debian-installer/language string en
+d-i debian-installer/country string CH
+
+### Clock and time zone setup
+d-i clock-setup/utc boolean true
+d-i time/zone string Europe/Zurich
+
+passwd   passwd/root-password    password pcengines
+passwd   passwd/root-password-again  password pcengines
+
+
+d-i mirror/protocol string http
+d-i mirror/country string manual
+d-i mirror/http/hostname string mirror.switch.ch 
+d-i mirror/http/directory string /ftp/mirror/debian
+d-i mirror/http/proxy string
+d-i mirror/suite string wheezy
+
+d-i pkgsel/include string openssh-server
+
+
+

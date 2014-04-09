@@ -1,0 +1,31 @@
+#!/bin/sh
+
+cat >/etc/sysctl.d/pcengines_apu.conf <<EOF
+vm.swappiness=1
+vm.vfs_cache_pressure=50
+EOF
+
+cat >/etc/cron.hourly/pcengines_apu.fstrim <<'EOF'
+#!/bin/sh
+
+STATUSFILE=/var/tmp/last_trim
+
+DOTRIM=NO
+
+if test ! -f $STATUSFILE; then
+    DOTRIM=YES
+else
+    LASTRUN=`stat -c %Y $STATUSFILE`
+    NOW=`date +%s`
+    if test `expr $NOW - $LASTRUN` -gt 86400; then
+        DOTRIM=YES
+    fi
+fi
+
+if test $DOTRIM = YES; then
+    fstrim -v /boot >$STATUSFILE 2>&1
+    fstrim -v / >>$STATUSFILE 2>&1
+fi
+EOF
+
+chmod 755 /etc/cron.hourly/pcengines_apu.fstrim
