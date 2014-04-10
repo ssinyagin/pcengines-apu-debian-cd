@@ -27,7 +27,7 @@ partition. The system is optimized for minimal swap usage:
 vm.swappiness=1 in /etc/sysctl.d/pcengines_apu.conf
 
 The profile adds an hourly cronjob
-(/etc/cron.hourly/pcengines_apu.fstrim) which performs fstrim command on
+(/etc/cron.hourly/pcengines_apu_fstrim) which performs fstrim command on
 root and boot partitions once a day.
 
 The kernel boots with "elevator=deadline", which optimizes the I/O

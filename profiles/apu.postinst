@@ -5,7 +5,7 @@ vm.swappiness=1
 vm.vfs_cache_pressure=50
 EOF
 
-cat >/etc/cron.hourly/pcengines_apu.fstrim <<'EOF'
+cat >/etc/cron.hourly/pcengines_apu_fstrim <<'EOF'
 #!/bin/sh
 
 STATUSFILE=/var/tmp/last_trim
@@ -28,4 +28,4 @@ if test $DOTRIM = YES; then
 fi
 EOF
 
-chmod 755 /etc/cron.hourly/pcengines_apu.fstrim
+chmod 755 /etc/cron.hourly/pcengines_apu_fstrim
