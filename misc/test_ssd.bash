@@ -11,6 +11,11 @@ if [ x$TSTDIR = x  ]; then
     exit 1
 fi
 
+if [ ! -x /usr/bin/openssl ]; then
+    echo "openssl is not installed" 1>&2
+    exit 1
+fi  
+    
 BATCHSIZE=10000
 
 test -d $TSTDIR || mkdir $TSTDIR
