@@ -48,6 +48,16 @@ installed on mSATA SSD drive.
 
 !!! ALL EXISTING DATA ON THE DRIVE WILL BE LOST !!!
 
+The build machine needs to be Debian Wheezy. Other Debian versions or
+Ubuntu are not fully tested and there are some issues, not yet fully
+investigated.
+
+Both the build machine and the APU board need the Internet connection
+during the installation. The installer assumes that eth0 is connected to
+a network with DHCP service and Internet access.
+
+The installation ISO image is about 200MB in size.
+
 Build the CD image on the build machine:
 
 ## install prerequisites
