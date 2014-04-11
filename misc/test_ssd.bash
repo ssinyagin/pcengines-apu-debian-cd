@@ -4,7 +4,13 @@
 ## dissipation is tested as well.
 
 
-TSTDIR=/var/tmp/x
+TSTDIR=$1
+
+if [ x$TSTDIR = x  ]; then
+    echo "Usage: $0 DIR" 1>&2
+    exit 1
+fi
+
 BATCHSIZE=10000
 
 test -d $TSTDIR || mkdir $TSTDIR
