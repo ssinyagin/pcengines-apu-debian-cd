@@ -19,7 +19,10 @@ you may want to change some options.
 
 The default hostname is set to "apu", unless DHCP delivers a different
 name. Default root password is "pcengines", and it is defined in
-profiles/apu.preseed
+"profiles/apu.preseed". If you want have a prompt for hostname, add the
+following line to "profiles/apu.preseed":
+
+d-i netcfg/get_hostname seen false
 
 The disk layout does not allocate a swap partition (the APU board has 2
 or 4GB RAM). If you need swap, you can add a swapfile in root
@@ -80,9 +83,14 @@ fdisk -l
 ## copy the installer CD image
 dd if=images/debian-7.4-i386-CD-1.iso of=/dev/sdc bs=1M
 
-## insert the USB stick into APU board and connect the serial terminal
+
+## It is recommended to change the default boot sequence, and have mSATA
+## drive as the first boot source. Upon booting the board, wait for F12
+## prompt and press F12, and edit the default boot settings.
+
+## Insert the USB stick into APU board and connect the serial terminal
 ## The terminal emulator should be vt220 or xterm (vt100 does not have
-## F12).  When the prompt for F12 appears, press F12 and select your USB
+## F12). When the prompt for F12 appears, press F12 and select your USB
 ## stick as boot source.
 
 ## In the boot menu, "Install" will do automatic installation.
@@ -95,6 +103,11 @@ Press <ENTER> to see video modes available, <SPACE> to continue, or wait 30 sec
 ## The installation continues, and you will get a new system within
 ## about 10 minutes. The APU will automatically reboot after the
 ## installation.
+
+## If you want the board to halt after the installation is finished, add
+## the following line to "profiles/apu.preseed":
+
+d-i debian-installer/exit/halt boolean true
 
 
 Author
