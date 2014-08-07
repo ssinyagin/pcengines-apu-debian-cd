@@ -19,8 +19,11 @@ you may want to change some options.
 
 The default hostname is set to "apu", unless DHCP delivers a different
 name. Default root password is "pcengines", and it is defined in
-"profiles/apu.preseed". If you want have a prompt for hostname, add the
-following line to "profiles/apu.preseed":
+"profiles/apu.preseed".
+
+By default, the installer asks for the host name (this is the only thing
+that i smanually entered). If you want to skip the hostname prompt,
+comment out the following line to "profiles/apu.preseed":
 
 d-i netcfg/get_hostname seen false
 
@@ -45,9 +48,10 @@ Installation
 ------------
 
 WARNING: this is a fully automated installation. Once you boot from the
-USB stick, it will only give you 5 seconds in the initial menu, and the
-rest will be done automatically, and a new Debian system will be
-installed on mSATA SSD drive.
+USB stick, it will only give you 5 seconds in the initial menu, then in
+a couple of minutes it will ask for the hostname, and the rest will be
+done automatically, and a new Debian system will be installed on mSATA
+SSD drive.
 
 !!! ALL EXISTING DATA ON THE DRIVE WILL BE LOST !!!
 
@@ -56,8 +60,9 @@ Ubuntu are not fully tested and there are some issues, not yet fully
 investigated.
 
 Both the build machine and the APU board need the Internet connection
-during the installation. The installer assumes that eth0 is connected to
-a network with DHCP service and Internet access.
+during the installation. The installer assumes that eth0 (marked as LAN1
+on the APU board) is connected to a network with DHCP service and
+Internet access.
 
 The installation ISO image is about 200MB in size.
 
@@ -81,7 +86,7 @@ build-simple-cdd --conf profiles/apu.conf --dist wheezy --force-root
 fdisk -l
 
 ## copy the installer CD image
-dd if=images/debian-7.4-i386-CD-1.iso of=/dev/sdc bs=1M
+dd if=images/debian-7.5-i386-CD-1.iso of=/dev/sdc bs=16M
 
 
 ## It is recommended to change the default boot sequence, and have mSATA
@@ -100,14 +105,8 @@ dd if=images/debian-7.4-i386-CD-1.iso of=/dev/sdc bs=1M
 Undefined video mode number: 314
 Press <ENTER> to see video modes available, <SPACE> to continue, or wait 30 sec
 
-## The installation continues, and you will get a new system within
-## about 10 minutes. The APU will automatically reboot after the
-## installation.
-
-## If you want the board to halt after the installation is finished, add
-## the following line to "profiles/apu.preseed":
-
-d-i debian-installer/exit/halt boolean true
+## The installation continues, and takes about 15 minutes in total. The
+## device will halt after the installation is finished.
 
 
 Author
