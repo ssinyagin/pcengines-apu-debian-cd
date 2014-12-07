@@ -1,0 +1,92 @@
+# set the deadline scheduler globally for better SSD performance
+d-i debian-installer/add-kernel-opts string video=off\
+ elevator=deadline console=ttyS0,115200
+
+# Skip creation of a normal user account.
+d-i passwd/make-user boolean false
+
+
+# Any hostname and domain names assigned from dhcp take precedence over
+# values set here. However, setting the values still prevents the questions
+# from being shown, even if values come from dhcp.
+d-i netcfg/get_hostname string apu
+
+d-i netcfg/get_hostname seen false
+
+
+# Automatically label the disk without asking
+d-i partman-auto/choose_recipe select boot-root
+d-i partman-partitioning/confirm_write_new_label boolean true
+d-i partman/choose_partition select finish
+d-i partman/confirm boolean true
+d-i partman/confirm_nooverwrite boolean true
+d-i partman-auto/disk string /dev/sda
+d-i partman-auto/purge_lvm_from_device boolean true
+d-i partman-lvm/confirm boolean true
+
+# Disk partitioning method
+d-i partman-auto/method string regular
+
+# Custom partition layout: both /boot and root in ext4, with noatime option
+d-i partman-auto/expert_recipe string                         \
+      boot-root ::                                            \
+              128 50 128 ext4                                 \
+                      $primary{ } $bootable{ }                \
+                      method{ format } format{ }              \
+                      use_filesystem{ } filesystem{ ext4 }    \
+                      mountpoint{ /boot }                     \
+                      options/noatime{ noatime }              \
+              .                                               \
+              500 10000 1000000000 ext4                       \
+                      method{ format } format{ }              \
+                      use_filesystem{ } filesystem{ ext4 }    \
+                      mountpoint{ / }                         \
+                      options/noatime{ noatime }              \
+              .
+
+# Skip question about not having swap partition
+partman-basicfilesystems partman-basicfilesystems/no_swap boolean false
+
+
+d-i grub-installer/with_other_os  boolean false
+
+
+# The kernel image (meta) package to be installed; "none" can be used if no
+# kernel is to be installed.
+d-i base-installer/kernel/image string linux-image-amd64
+
+
+# Some versions of the installer can report back on what software you have
+# installed, and what software you use. The default is not to report back,
+# but sending reports helps the project determine what software is most
+# popular and include it on CDs.
+popularity-contest popularity-contest/participate boolean false
+
+#####
+## Things you may want to change ##
+
+d-i debian-installer/locale string en_US.UTF-8
+d-i debian-installer/language string en
+d-i debian-installer/country string CH
+
+### Clock and time zone setup
+d-i clock-setup/utc boolean true
+d-i time/zone string Europe/Zurich
+
+passwd   passwd/root-password    password pcengines
+passwd   passwd/root-password-again  password pcengines
+
+
+d-i mirror/protocol string http
+d-i mirror/country string manual
+d-i mirror/http/hostname string mirror.switch.ch 
+d-i mirror/http/directory string /ftp/mirror/debian
+d-i mirror/http/proxy string
+d-i mirror/suite string wheezy
+
+d-i pkgsel/include string openssh-server
+
+### halt when finished
+d-i debian-installer/exit/halt boolean true
+
+

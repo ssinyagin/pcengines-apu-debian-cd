@@ -12,6 +12,9 @@ This installation is only intended for an mSATA drive on the APU
 board. If you plan to boot from SD card, use Voyage Linux instead:
 http://linux.voyage.hk/
 
+The configuration files can build either an i386 or amd64 installer for
+the APU platform (but not both architectures inside the same path).
+
 The build machine can be Debian Wheezy of amd64 or i386 architecture.
 
 Before using these scripts, have a look at the files in profiles/, and
@@ -77,8 +80,13 @@ mkdir /opt/pcengines
 cd /opt/pcengines
 git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
 
-## build the installation CD image
-build-simple-cdd --conf profiles/apu.conf --dist wheezy --force-root
+## build the installation CD image (32bit or 64bit version). If you need
+# to build another ISO image of a different architecture inside the same
+# path, delete the contents of "tmp/" subdirectory.
+
+# build-simple-cdd --conf profiles/apu32.conf --dist wheezy --force-root
+build-simple-cdd --conf profiles/apu64.conf --dist wheezy --force-root
+
 
 ## insert the USB stick into the build machine
 
@@ -86,8 +94,8 @@ build-simple-cdd --conf profiles/apu.conf --dist wheezy --force-root
 fdisk -l
 
 ## copy the installer CD image
-dd if=images/debian-7.5-i386-CD-1.iso of=/dev/sdc bs=16M
-
+# dd if=images/debian-7.7-i386-CD-1.iso of=/dev/sdc bs=16M
+dd if=images/debian-7.7-amd64-CD-1.iso of=/dev/sdc bs=16M
 
 ## It is recommended to change the default boot sequence, and have mSATA
 ## drive as the first boot source. Upon booting the board, wait for F12
