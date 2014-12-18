@@ -79,8 +79,8 @@ passwd   passwd/root-password-again  password pcengines
 
 d-i mirror/protocol string http
 d-i mirror/country string manual
-d-i mirror/http/hostname string mirror.switch.ch 
-d-i mirror/http/directory string /ftp/mirror/debian
+d-i mirror/http/hostname string http.debian.net
+d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 d-i mirror/suite string wheezy
 
