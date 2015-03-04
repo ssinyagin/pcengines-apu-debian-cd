@@ -25,7 +25,7 @@ name. Default root password is "pcengines", and it is defined in
 "profiles/apu.preseed".
 
 By default, the installer asks for the host name (this is the only thing
-that i smanually entered). If you want to skip the hostname prompt,
+that is manually entered). If you want to skip the hostname prompt,
 comment out the following line to "profiles/apu.preseed":
 
 d-i netcfg/get_hostname seen false
