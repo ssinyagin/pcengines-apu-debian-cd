@@ -87,6 +87,9 @@ git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
 # build-simple-cdd --conf profiles/apu32.conf --dist wheezy --force-root
 build-simple-cdd --conf profiles/apu64.conf --dist wheezy --force-root
 
+# In case of a failure, delete the contents of tmp/ subfolder.
+# Sometimes problems with accessing the mirror leave garbage in tmp/
+# and this breaks the execution of build-simple-cdd
 
 ## insert the USB stick into the build machine
 
