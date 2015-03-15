@@ -50,6 +50,13 @@ https://wiki.freeswitch.org/wiki/SSD_Tuning_for_Linux
 https://wiki.debian.org/SSDOptimization
 
 
+Binary releases
+---------------
+
+A 64-bit installer ISO image is available at Gitgub in Releases section:
+https://github.com/ssinyagin/pcengines-apu-debian-cd/releases
+
+
 Installation
 ------------
 
