@@ -18,7 +18,10 @@ the APU platform (but not both architectures inside the same path).
 The build machine can be Debian Wheezy of amd64 or i386 architecture.
 
 Before using these scripts, have a look at the files in profiles/, and
-you may want to change some options.
+you may want to change some options. The "wget_debian_mirror" parameter
+should point to a working FTP mirror, so you may want to select a mirror
+near you.
+
 
 The default hostname is set to "apu", unless DHCP delivers a different
 name. Default root password is "pcengines", and it is defined in
