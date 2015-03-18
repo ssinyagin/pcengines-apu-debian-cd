@@ -94,8 +94,8 @@ git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
 # to build another ISO image of a different architecture inside the same
 # path, delete the contents of "tmp/" subdirectory.
 
-# build-simple-cdd --conf profiles/apu32.conf --dist wheezy --force-root
-build-simple-cdd --conf profiles/apu64.conf --dist wheezy --force-root
+# build-simple-cdd --conf pcengines-apu-debian-cd/profiles/apu32.conf --dist wheezy --force-root
+build-simple-cdd --conf pcengines-apu-debian-cd/profiles/apu64.conf --dist wheezy --force-root
 
 # In case of a failure, delete the contents of tmp/ subfolder.
 # Sometimes problems with accessing the mirror leave garbage in tmp/
