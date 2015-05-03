@@ -15,7 +15,9 @@ http://linux.voyage.hk/
 The configuration files can build either an i386 or amd64 installer for
 the APU platform (but not both architectures inside the same path).
 
-The build machine can be Debian Wheezy of amd64 or i386 architecture.
+In order to build a Debian Wheezy installer, the build machine has to be
+a Wheezy host of amd64 or i386 architecture. A Jessie installer can only
+be built on a Jessie host.
 
 Before using these scripts, have a look at the files in profiles/, and
 you may want to change some options. The "wget_debian_mirror" parameter
@@ -49,6 +51,15 @@ See also SSD optimization tips:
 https://wiki.freeswitch.org/wiki/SSD_Tuning_for_Linux
 https://wiki.debian.org/SSDOptimization
 
+Jessie notes
+------------
+
+The installer has only had limited testing under Debian Jessie.
+
+The SSH daemon now has `PermitRootLogin without-password` by default,
+which disallows the root to login with a password. You either need to
+install your public SSH key in root's autorized_keys, or change the SSH
+daemon configuration.
 
 Binary releases
 ---------------
@@ -96,6 +107,7 @@ git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
 
 # build-simple-cdd --conf profiles/apu32.conf --dist wheezy --force-root
 build-simple-cdd --conf profiles/apu64.conf --dist wheezy --force-root
+# build-simple-cdd --conf profiles/apu64.conf --dist jessie --force-root
 
 # In case of a failure, delete the contents of tmp/ subfolder.
 # Sometimes problems with accessing the mirror leave garbage in tmp/
