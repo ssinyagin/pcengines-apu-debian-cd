@@ -49,7 +49,7 @@ partman-basicfilesystems partman-basicfilesystems/no_swap boolean false
 
 
 d-i grub-installer/with_other_os  boolean false
-
+d-i grub-installer/bootdev  string default
 
 # The kernel image (meta) package to be installed; "none" can be used if no
 # kernel is to be installed.
