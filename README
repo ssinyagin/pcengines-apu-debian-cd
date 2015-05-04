@@ -24,7 +24,6 @@ you may want to change some options. The "wget_debian_mirror" parameter
 should point to a working FTP mirror, so you may want to select a mirror
 near you.
 
-
 The default hostname is set to "apu", unless DHCP delivers a different
 name. Default root password is "pcengines", and it is defined in
 "profiles/apu.preseed".
@@ -50,6 +49,11 @@ performance for SSD drives.
 See also SSD optimization tips:
 https://wiki.freeswitch.org/wiki/SSD_Tuning_for_Linux
 https://wiki.debian.org/SSDOptimization
+
+If you need a live or rescue CD, you can get a Live CD from Voyage
+Linux. It works fine, the only minor issue is that it switches the
+serial console to 9600 baud: http://linux.voyage.hk/
+
 
 Jessie notes
 ------------
