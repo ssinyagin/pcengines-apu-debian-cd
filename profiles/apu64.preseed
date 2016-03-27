@@ -13,6 +13,7 @@ d-i netcfg/get_hostname string apu
 
 d-i netcfg/get_hostname seen false
 
+d-i netcfg/choose_interface select eth0
 
 # Automatically label the disk without asking
 d-i partman-auto/choose_recipe select boot-root
@@ -84,7 +85,14 @@ d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 d-i mirror/suite string wheezy
 
-d-i pkgsel/include string openssh-server
+tasksel tasksel/first multiselect ssh-server
+#d-i pkgsel/include string openssh-server
+d-i pkgsel/upgrade select none
+
+# Disable that annoying WEP key dialog.
+d-i netcfg/wireless_wep string
+# Allow non-free firmware
+d-i hw-detect/load_firmware boolean true
 
 ### halt when finished
 d-i debian-installer/exit/halt boolean true
