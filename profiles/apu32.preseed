@@ -16,7 +16,7 @@ d-i netcfg/get_hostname seen false
 d-i netcfg/choose_interface select eth0
 
 # Automatically label the disk without asking
-d-i partman-auto/choose_recipe select boot-root
+d-i partman-auto/choose_recipe select boot-root-home
 d-i partman-partitioning/confirm_write_new_label boolean true
 d-i partman/choose_partition select finish
 d-i partman/confirm boolean true
@@ -26,24 +26,32 @@ d-i partman-auto/purge_lvm_from_device boolean true
 d-i partman-lvm/confirm boolean true
 
 # Disk partitioning method
-d-i partman-auto/method string regular
+d-i partman-auto/method string lvm
 
 # Custom partition layout: both /boot and root in ext4, with noatime option
 d-i partman-auto/expert_recipe string                         \
-      boot-root ::                                            \
-              128 50 128 ext4                                 \
-                      $primary{ } $bootable{ }                \
-                      method{ format } format{ }              \
-                      use_filesystem{ } filesystem{ ext4 }    \
-                      mountpoint{ /boot }                     \
-                      options/noatime{ noatime }              \
+      boot-root-home ::                                       \
+              100 50 250 ext4                                 \
+                   $primary{ }                                \
+                   $bootable{ }                               \
+                   method{ format } format{ }                 \
+                   use_filesystem{ } filesystem{ ext4 }       \
+                   mountpoint{ /boot }                        \
               .                                               \
-              500 10000 1000000000 ext4                       \
-                      method{ format } format{ }              \
-                      use_filesystem{ } filesystem{ ext4 }    \
-                      mountpoint{ / }                         \
-                      options/noatime{ noatime }              \
-              .
+              40 50 10000 ext4                                \
+                   lv_name{ root }                            \
+                   method{ lvm } format{ }                    \
+                   use_filesystem{ } filesystem{ ext4 }       \
+                   mountpoint{ / }                            \
+                   $lvmok{ }                                  \
+              .                                               \
+              40 50 -1 ext4                                   \
+                   lv_name{ home }                            \
+                   method{ lvm } format{ }                    \
+                   use_filesystem{ } filesystem{ ext4 }       \
+                   mountpoint{ /home }                        \
+                   $lvmok{ }                                  \
+              .                                               \
 
 # Skip question about not having swap partition
 partman-basicfilesystems partman-basicfilesystems/no_swap boolean false
