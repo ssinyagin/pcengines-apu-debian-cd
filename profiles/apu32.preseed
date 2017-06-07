@@ -16,7 +16,7 @@ d-i netcfg/get_hostname seen false
 d-i netcfg/choose_interface select eth0
 
 # Automatically label the disk without asking
-d-i partman-auto/choose_recipe select boot-root-home
+d-i partman-auto/choose_recipe select boot-root-var
 d-i partman-partitioning/confirm_write_new_label boolean true
 d-i partman/choose_partition select finish
 d-i partman/confirm boolean true
@@ -30,7 +30,7 @@ d-i partman-auto/method string lvm
 
 # Custom partition layout: both /boot and root in ext4, with noatime option
 d-i partman-auto/expert_recipe string                         \
-      boot-root-home ::                                       \
+      boot-root-var ::                                        \
               100 50 250 ext4                                 \
                    $primary{ }                                \
                    $bootable{ }                               \
@@ -46,10 +46,10 @@ d-i partman-auto/expert_recipe string                         \
                    $lvmok{ }                                  \
               .                                               \
               40 50 -1 ext4                                   \
-                   lv_name{ home }                            \
+                   lv_name{ var }                             \
                    method{ lvm } format{ }                    \
                    use_filesystem{ } filesystem{ ext4 }       \
-                   mountpoint{ /home }                        \
+                   mountpoint{ /var }                         \
                    $lvmok{ }                                  \
               .                                               \
 
