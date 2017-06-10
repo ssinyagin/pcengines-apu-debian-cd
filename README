@@ -12,8 +12,8 @@ This installation is only intended for an mSATA drive on the APU
 board. If you plan to boot from SD card, use Voyage Linux instead:
 http://linux.voyage.hk/
 
-The configuration files can build either an i386 or amd64 installer for
-the APU platform (but not both architectures inside the same path).
+The configuration files build amd64 installer for the APU platform (APU
+versions 1, 2, and 3 have been tested).
 
 The build machine should be of the same Debian release as the image that
 you are building: a Wheezy host can produce a Wheezy ISO, and a Jessie
@@ -30,7 +30,7 @@ name. Default root password is "pcengines", and it is defined in
 
 By default, the installer asks for the host name (this is the only thing
 that is manually entered). If you want to skip the hostname prompt,
-comment out the following line to "profiles/apu.preseed":
+comment out the following line to "profiles/apu64.preseed":
 
 d-i netcfg/get_hostname seen false
 
@@ -55,10 +55,7 @@ Linux. It works fine, the only minor issue is that it switches the
 serial console to 9600 baud: http://linux.voyage.hk/
 
 
-Jessie notes
-------------
-
-The SSH daemon now has `PermitRootLogin without-password` by default,
+The SSH daemon has `PermitRootLogin without-password` by default,
 which disallows the root to login with a password. You either need to
 install your public SSH key in root's autorized_keys, or change the SSH
 daemon configuration.
@@ -81,9 +78,9 @@ SSD drive.
 
 !!! ALL EXISTING DATA ON THE DRIVE WILL BE LOST !!!
 
-The build machine needs to be Debian Wheezy. Other Debian versions or
-Ubuntu are not fully tested and there are some issues, not yet fully
-investigated.
+The build machine needs to be Debian Jessie (or Wheezy if you need to
+produce a Debian 6 image). Other Debian versions or Ubuntu are not fully
+tested and there are some issues, not yet fully investigated.
 
 Both the build machine and the APU board need the Internet connection
 during the installation. The installer assumes that eth0 (marked as LAN1
@@ -103,15 +100,11 @@ mkdir /opt/pcengines
 cd /opt/pcengines
 git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
 
-## build the installation CD image (32bit or 64bit version). If you need
-# to build another ISO image of a different architecture inside the same
-# path, delete the contents of "tmp/" subdirectory.
+## build the installation CD image. If you need to build another ISO
+# image of a different architecture inside the same path, delete the
+# contents of "tmp/" subdirectory. Run the following command as root:
 
 build-simple-cdd --conf profiles/apu64.conf --dist jessie --force-root
-# alternative commands for different builds:
-# build-simple-cdd --conf profiles/apu32.conf --dist jessie --force-root
-# build-simple-cdd --conf profiles/apu64.conf --dist wheezy --force-root
-# build-simple-cdd --conf profiles/apu32.conf --dist wheezy --force-root
 
 # In case of a failure, delete the contents of tmp/ subfolder.
 # Sometimes problems with accessing the mirror leave garbage in tmp/
@@ -123,7 +116,7 @@ build-simple-cdd --conf profiles/apu64.conf --dist jessie --force-root
 fdisk -l
 
 ## copy the installer CD image
-dd if=images/debian-8.3-amd64-CD-1.iso of=/dev/sdc bs=16M
+dd if=images/debian-8.8-amd64-CD-1.iso of=/dev/sdc bs=16M
 
 ## Insert the USB stick into APU board and connect a serial terminal at
 ## 115200 baud rate.  The terminal emulator should be vt220 or xterm
