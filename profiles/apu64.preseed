@@ -13,7 +13,7 @@ d-i netcfg/get_hostname string apu
 
 d-i netcfg/get_hostname seen false
 
-d-i netcfg/choose_interface select eth0
+d-i netcfg/choose_interface select enp1s0
 
 # Automatically label the disk without asking
 d-i partman-auto/choose_recipe select boot-root
