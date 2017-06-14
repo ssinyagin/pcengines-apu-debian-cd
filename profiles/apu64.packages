@@ -2,10 +2,11 @@ ntp
 firmware-realtek
 firmware-brcm80211
 firmware-atheros
-firmware-ralink
+firmware-misc-nonfree
 firmware-iwlwifi
 wireless-tools
 wpasupplicant
 iw
 hdparm
 smartmontools
+
