@@ -16,8 +16,8 @@ The configuration files build amd64 installer for the APU platform (APU
 versions 1, 2, and 3 have been tested).
 
 The build machine should be of the same Debian release as the image that
-you are building: a Wheezy host can produce a Wheezy ISO, and a Jessie
-host can produce a Jessie ISO.
+you are building: a Jessie host can produce a Jessie ISO, and a Stretch
+host can produce a Stretch ISO.
 
 Before using these scripts, have a look at the files in profiles/, and
 you may want to change some options. The "wget_debian_mirror" parameter
@@ -78,13 +78,13 @@ SSD drive.
 
 !!! ALL EXISTING DATA ON THE DRIVE WILL BE LOST !!!
 
-The build machine needs to be Debian Jessie (or Wheezy if you need to
-produce a Debian 6 image). Other Debian versions or Ubuntu are not fully
-tested and there are some issues, not yet fully investigated.
+The build machine needs to be Debian Stretch (Debian Jessie was
+supported up to commit f01e3e97). Other Debian versions or Ubuntu are
+not fully tested.
 
 Both the build machine and the APU board need the Internet connection
-during the installation. The installer assumes that eth0 (marked as LAN1
-on the APU board) is connected to a network with DHCP service and
+during the installation. The installer assumes that enp1s0 (marked as
+LAN1 on the APU board) is connected to a network with DHCP service and
 Internet access.
 
 The installation ISO image is about 200MB in size.
@@ -102,9 +102,14 @@ git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
 
 ## build the installation CD image. If you need to build another ISO
 # image of a different architecture inside the same path, delete the
-# contents of "tmp/" subdirectory. Run the following command as root:
+# contents of "tmp/" subdirectory. Run the following command as anormal
+# user. If you run it as root, use "--force-root" option:
 
-build-simple-cdd --conf profiles/apu64.conf --dist jessie --force-root
+build-simple-cdd --conf profiles/apu64.conf --dist stretch
+
+# If your machine does not have IPv6 connectivity, you may get an error
+# that an IPv6 mirror site is not reachable. In this case, re-run the
+# command, and it would randomly pick an IPv4 mirror.
 
 # In case of a failure, delete the contents of tmp/ subfolder.
 # Sometimes problems with accessing the mirror leave garbage in tmp/
@@ -116,7 +121,7 @@ build-simple-cdd --conf profiles/apu64.conf --dist jessie --force-root
 fdisk -l
 
 ## copy the installer CD image
-dd if=images/debian-8.8-amd64-CD-1.iso of=/dev/sdc bs=16M
+dd if=images/debian-9.1-amd64-CD-1.iso of=/dev/sdc bs=16M
 
 ## Insert the USB stick into APU board and connect a serial terminal at
 ## 115200 baud rate.  The terminal emulator should be vt220 or xterm
