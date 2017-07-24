@@ -1,0 +1,30 @@
+# set the deadline scheduler globally for better SSD performance
+d-i debian-installer/add-kernel-opts string video=off\
+ elevator=deadline console=ttyS0,115200
+
+# Skip creation of a normal user account.
+d-i passwd/make-user boolean false
+
+# Prompt for hostname
+d-i netcfg/get_hostname string apu
+d-i netcfg/get_hostname seen false
+
+d-i netcfg/choose_interface select auto
+d-i netcfg/use_autoconfig boolean false
+
+popularity-contest popularity-contest/participate boolean false
+
+d-i clock-setup/utc boolean true
+d-i clock-setup/ntp boolean true
+d-i clock-setup/ntp-server string pool.ntp.org
+
+tasksel tasksel/first multiselect ssh-server
+d-i pkgsel/upgrade select none
+
+# Allow non-free firmware
+d-i hw-detect/load_firmware boolean true
+
+### halt when finished
+d-i debian-installer/exit/halt boolean true
+
+
