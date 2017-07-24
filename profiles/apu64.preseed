@@ -83,7 +83,6 @@ d-i mirror/country string manual
 d-i mirror/http/hostname string httpredir.debian.org
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
-d-i mirror/suite string wheezy
 
 tasksel tasksel/first multiselect ssh-server
 d-i pkgsel/upgrade select none
