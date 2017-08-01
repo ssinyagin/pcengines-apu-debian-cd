@@ -83,7 +83,7 @@ passwd   passwd/root-password-again  password pcengines
 
 d-i mirror/protocol string http
 d-i mirror/country string manual
-d-i mirror/http/hostname string httpredir.debian.org
+d-i mirror/http/hostname string deb.debian.org
 d-i mirror/http/directory string /debian
 d-i mirror/http/proxy string
 
