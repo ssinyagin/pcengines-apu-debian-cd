@@ -93,7 +93,7 @@ Build the CD image on the build machine:
 
 ## install prerequisites
 apt-get update
-apt-get install -y simple-cdd git
+apt-get install -y simple-cdd git xorriso
 
 ## get our latest files
 mkdir /opt/pcengines
