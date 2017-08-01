@@ -20,6 +20,7 @@ d-i clock-setup/ntp-server string pool.ntp.org
 
 tasksel tasksel/first multiselect ssh-server
 d-i pkgsel/upgrade select none
+d-i pkgsel/include string ntp hdparm net-tools
 
 # Allow non-free firmware
 d-i hw-detect/load_firmware boolean true
