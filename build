@@ -1,0 +1,45 @@
+#!/bin/sh
+
+PROFILE=$1
+
+if [ x${PROFILE} = x ]; then
+    echo "Usage: $0 PROFILE" 1>&2;
+    exit 1
+fi
+
+if [ ! -e profiles/${PROFILE}.conf ]; then
+    echo "Unknown profile: ${PROFILE}" 1>&2;
+    exit 1
+fi
+
+OSCODE=`lsb_release -c | awk '{print $2}'`
+
+if [ x${OSCODE} = x ]; then
+    echo "Cannot determine OS codename" 1>&2;
+    exit 1
+fi
+
+if [ `id -u` -eq 0 ]; then
+    ROOT_CMDOPTS='--force-root'
+else
+    ROOT_CMDOPTS=''
+fi
+
+if [ -e profiles/default.preseed ]; then
+    rm -f profiles/default.preseed
+fi
+
+if [ -e profiles/${PROFILE}.prerun ]; then
+   profiles/${PROFILE}.prerun
+   if [ $? -ne 0 ]; then
+       echo "profiles/${PROFILE}.prerun returned error. Aborting" 1>&2
+       exit 1
+   fi
+fi
+
+build-simple-cdd --conf profiles/${PROFILE}.conf \
+    --dist ${OSCODE} ${ROOT_CMDOPTS}
+
+   
+
+   

@@ -22,6 +22,14 @@ host can produce a Stretch ISO.
 Before using these scripts, have a look at the files in profiles/, and
 you may want to change some options.
 
+There are two profiles defined in profiles/ directory: "apu64" and "manual".
+
+
+"apu64" profile
+---------------
+
+This profile is designed to automate as much as possible.
+
 The default hostname is set to "apu", unless DHCP delivers a different
 name. Default root password is "pcengines", and it is defined in
 "profiles/apu64.preseed".
@@ -41,6 +49,21 @@ The profile adds an hourly cronjob
 (/etc/cron.hourly/pcengines_apu_fstrim) which performs fstrim command on
 root and boot partitions once a day.
 
+
+"manual" profile
+----------------
+
+This profile disables the automation, and lets you choose the region,
+the debian mirror, the hostname and password, and it allows you to
+choose the disk partitioning that you need. You can also configure
+software RAID if you have multiple physical disks.
+
+The manual profile does not install the fstrim cronjob.
+
+
+Notes
+-----
+
 The kernel boots with "elevator=deadline", which optimizes the I/O
 performance for SSD drives.
 
@@ -52,11 +75,11 @@ If you need a live or rescue CD, you can get a Live CD from Voyage
 Linux. It works fine, the only minor issue is that it switches the
 serial console to 9600 baud: http://linux.voyage.hk/
 
-
 The SSH daemon has `PermitRootLogin without-password` by default,
 which disallows the root to login with a password. You either need to
 install your public SSH key in root's autorized_keys, or change the SSH
 daemon configuration.
+
 
 Binary releases
 ---------------
@@ -87,11 +110,11 @@ Internet access.
 
 The installation ISO image is about 200MB in size.
 
-Build the CD image on the build machine:
+Create the CD image on the build machine:
 
 ## install prerequisites
 apt-get update
-apt-get install -y simple-cdd git xorriso
+apt-get install -y simple-cdd git xorriso lsb-release
 
 ## get our latest files
 mkdir /opt/pcengines
@@ -103,11 +126,7 @@ git clone https://github.com/ssinyagin/pcengines-apu-debian-cd.git .
 # contents of "tmp/" subdirectory. Run the following command as anormal
 # user. If you run it as root, use "--force-root" option:
 
-build-simple-cdd --conf profiles/apu64.conf --dist stretch
-
-# If your machine does not have IPv6 connectivity, you may get an error
-# that an IPv6 mirror site is not reachable. In this case, re-run the
-# command, and it would randomly pick an IPv4 mirror.
+./build apu64
 
 # In case of a failure, delete the contents of tmp/ subfolder.
 # Sometimes problems with accessing the mirror leave garbage in tmp/

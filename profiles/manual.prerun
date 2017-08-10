@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# The default profile has predefined partman behavior which prevents
+# from choosing manual partitioning. We create our own copy of default.preseed
+
+sed -e 's,^d-i partman,\#d-i partman,' \
+ /usr/share/simple-cdd/profiles/default.preseed >profiles/default.preseed
