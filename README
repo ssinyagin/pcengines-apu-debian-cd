@@ -15,22 +15,20 @@ http://linux.voyage.hk/
 The configuration files build amd64 installer for the APU platform (APU
 versions 1, 2, and 3 have been tested).
 
-The build machine should be of the same Debian release as the image that
+The build machine MUST be of the same Debian release as the image that
 you are building: a Jessie host can produce a Jessie ISO, and a Stretch
 host can produce a Stretch ISO.
 
 Before using these scripts, have a look at the files in profiles/, and
-you may want to change some options. The "wget_debian_mirror" parameter
-should point to a working FTP mirror, so you may want to select a mirror
-near you.
+you may want to change some options.
 
 The default hostname is set to "apu", unless DHCP delivers a different
 name. Default root password is "pcengines", and it is defined in
-"profiles/apu.preseed".
+"profiles/apu64.preseed".
 
 By default, the installer asks for the host name (this is the only thing
 that is manually entered). If you want to skip the hostname prompt,
-comment out the following line to "profiles/apu64.preseed":
+comment out the following line in "profiles/apu64.preseed":
 
 d-i netcfg/get_hostname seen false
 
