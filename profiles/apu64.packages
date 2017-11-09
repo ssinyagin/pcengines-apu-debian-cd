@@ -10,4 +10,4 @@ wpasupplicant
 iw
 hdparm
 smartmontools
-
+dnsutils
