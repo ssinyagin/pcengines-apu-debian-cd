@@ -1,14 +1,14 @@
 #!/bin/sh
 
-cat >/etc/sysctl.d/pcengines_apu.conf <<EOF
+cat >/etc/sysctl.d/pcengines-apu.conf <<EOF
 vm.swappiness=1
 vm.vfs_cache_pressure=50
 EOF
 
-cat >/etc/cron.hourly/pcengines_apu_fstrim <<'EOF'
+cat >/etc/cron.hourly/pcengines-apu-fstrim <<'EOF'
 #!/bin/sh
 
-STATUSFILE=/var/tmp/last_trim
+STATUSFILE=/var/tmp/last-trim
 
 DOTRIM=NO
 
@@ -28,4 +28,4 @@ if test $DOTRIM = YES; then
 fi
 EOF
 
-chmod 755 /etc/cron.hourly/pcengines_apu_fstrim
+chmod 755 /etc/cron.hourly/pcengines-apu-fstrim
