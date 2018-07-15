@@ -73,9 +73,9 @@ popularity-contest popularity-contest/participate boolean false
 
 d-i debian-installer/locale string en_US.UTF-8
 d-i debian-installer/language string en
-d-i debian-installer/country string CH
+d-i debian-installer/country string DE
 
-d-i time/zone string Europe/Zurich
+d-i time/zone string Europe/Berlin
 
 passwd   passwd/root-password    password pcengines
 passwd   passwd/root-password-again  password pcengines
