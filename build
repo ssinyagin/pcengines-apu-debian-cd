@@ -37,9 +37,6 @@ if [ -e profiles/${PROFILE}.prerun ]; then
    fi
 fi
 
+REMOVE_KEYBOARD_PROMPTS="--keyboard us --locale en_US.UTF-8"
 build-simple-cdd --conf profiles/${PROFILE}.conf \
-    --dist ${OSCODE} ${ROOT_CMDOPTS}
-
-   
-
-   
+    --dist ${OSCODE} ${ROOT_CMDOPTS} ${REMOVE_KEYBOARD_PROMPTS}
