@@ -11,3 +11,4 @@ iw
 hdparm
 smartmontools
 dnsutils
+libpam-systemd
