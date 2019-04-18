@@ -40,6 +40,12 @@ comment out the following line in "profiles/apu64.preseed":
 
 d-i netcfg/get_hostname seen false
 
+By default the installer requires that repositories be authenticated using
+a known gpg key. Uncomment the following line in "profiles/apu64.preseed"
+to disable that authentication. Warning: Insecure, not recommended.
+
+#d-i debian-installer/allow_unauthenticated boolean true
+
 The disk layout does not allocate a swap partition (the APU board has 2
 or 4GB RAM). If you need swap, you can add a swapfile in root
 partition. The system is optimized for minimal swap usage:
