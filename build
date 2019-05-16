@@ -37,9 +37,17 @@ if [ -e profiles/${PROFILE}.prerun ]; then
    fi
 fi
 
-build-simple-cdd --conf profiles/${PROFILE}.conf \
+if [ -f /usr/share/keyrings/debian-archive-keyring.gpg ]; then
+  cp /usr/share/keyrings/debian-archive-keyring.gpg ~/
+  gpg --no-default-keyring --keyring=~/debian-archive-keyring.gpg --list-keys | awk '/\[expired: / { getline; print $1 }' | \
+  xargs apt-key --keyring ~/debian-archive-keyring.gpg del
+
+  build-simple-cdd
+    --conf profiles/${PROFILE}.conf \
+    --keyring ~/debian-archive-keyring.gpg \
     --dist ${OSCODE} ${ROOT_CMDOPTS}
-
-   
-
-   
+else
+  build-simple-cdd
+    --conf profiles/${PROFILE}.conf \
+    --dist ${OSCODE} ${ROOT_CMDOPTS}
+fi
