@@ -37,6 +37,16 @@ if [ -e profiles/${PROFILE}.prerun ]; then
    fi
 fi
 
+# Working around bug in simple-cdd by removing expired key for the wheezy
+# release.
+# -- https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=928703
+if [ ! -f './debian-archive-keyring.gpg' ]; then
+  cp /usr/share/keyrings/debian-archive-keyring.gpg .
+  sudo apt-key --keyring ./debian-archive-keyring.gpg del ED6D65271AACF0FF15D123036FB2A1C265FFB764
+  rm debian-archive-keyring.gpg~
+fi
+
 REMOVE_KEYBOARD_PROMPTS="--keyboard us --locale en_US.UTF-8"
 build-simple-cdd --conf profiles/${PROFILE}.conf \
+    --keyring ./debian-archive-keyring.gpg \
     --dist ${OSCODE} ${ROOT_CMDOPTS} ${REMOVE_KEYBOARD_PROMPTS}

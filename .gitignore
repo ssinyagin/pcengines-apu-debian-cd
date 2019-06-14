@@ -1,3 +1,4 @@
 tmp/
 images/
 profiles/default.preseed
+*.gpg*
