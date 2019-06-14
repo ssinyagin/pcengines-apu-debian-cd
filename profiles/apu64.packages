@@ -12,3 +12,4 @@ hdparm
 smartmontools
 dnsutils
 sudo
+libpam-systemd

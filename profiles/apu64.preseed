@@ -78,6 +78,11 @@ d-i clock-setup/utc boolean true
 d-i clock-setup/ntp boolean true
 d-i clock-setup/ntp-server string pool.ntp.org
 
+# By default the installer requires that repositories be authenticated
+# using a known gpg key. Comment out this to disable that
+# authentication. Warning: Insecure, not recommended.
+# d-i debian-installer/allow_unauthenticated boolean true
+
 
 # Some versions of the installer can report back on what software you have
 # installed, and what software you use. The default is not to report back,
