@@ -1,9 +1,10 @@
 #!/bin/sh
 
 PROFILE=$1
+OSCODE=$2
 
 if [ x${PROFILE} = x ]; then
-    echo "Usage: $0 PROFILE" 1>&2;
+    echo "Usage: $0 PROFILE [oscode]" 1>&2;
     exit 1
 fi
 
@@ -12,12 +13,11 @@ if [ ! -e profiles/${PROFILE}.conf ]; then
     exit 1
 fi
 
-OSCODE=`lsb_release -c | awk '{print $2}'`
-
 if [ x${OSCODE} = x ]; then
-    echo "Cannot determine OS codename" 1>&2;
-    exit 1
+  OSCODE=`lsb_release -c | awk '{print $2}'`
+  echo "Defaulted OSCODE to ${OSCODE}"
 fi
+
 
 if [ `id -u` -eq 0 ]; then
     ROOT_CMDOPTS='--force-root'
@@ -45,6 +45,7 @@ if [ ! -f './debian-archive-keyring.gpg' ]; then
   sudo apt-key --keyring ./debian-archive-keyring.gpg del ED6D65271AACF0FF15D123036FB2A1C265FFB764
   rm debian-archive-keyring.gpg~
 fi
+
 
 REMOVE_KEYBOARD_PROMPTS="--keyboard us --locale en_US.UTF-8"
 build-simple-cdd --conf profiles/${PROFILE}.conf \

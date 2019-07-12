@@ -86,6 +86,11 @@ which disallows the root to login with a password. You either need to
 install your public SSH key in root's autorized_keys, or change the SSH
 daemon configuration.
 
+To build a buster image on aa stretch (oldstable) machine, the following packages
+need to be updated to their buster versions:
+* https://packages.debian.org/buster/debian-cd
+* https://packages.debian.org/buster/python3-simple-cdd
+* https://packages.debian.org/buster/simple-cdd
 
 Binary releases
 ---------------
