@@ -29,3 +29,9 @@ fi
 EOF
 
 chmod 755 /etc/cron.hourly/pcengines_apu_fstrim
+
+SSHDCONFIGFILE=/etc/ssh/sshd_config
+
+if test -f $SSHDCONFIGFILE; then
+    sed -i "s/^#\?\(PermitRootLogin\) .*/\1 yes/g" $SSHDCONFIGFILE
+fi
