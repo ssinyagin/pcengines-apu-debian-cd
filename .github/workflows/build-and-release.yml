@@ -1,0 +1,32 @@
+name: build Debian image
+on:
+  push:
+    branches: [master, debian-buster]
+jobs:
+  build_and_publish:
+    name: Build a Debian image and makes a release out of it.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: sudo apt-get install -y simple-cdd xorriso
+
+      - name: Build image for APU
+        run: ./build apu64
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            Changes in this Release
+            - First Change
+            - Second Change
+          draft: false
+          prerelease: false
