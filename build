@@ -53,5 +53,5 @@ fi
 
 REMOVE_KEYBOARD_PROMPTS="--keyboard us --locale en_US.UTF-8"
 build-simple-cdd --conf profiles/${PROFILE}.conf \
-    --keyring ./debian-archive-keyring.gpg \
     --dist ${OSCODE} ${ROOT_CMDOPTS} ${REMOVE_KEYBOARD_PROMPTS}
+#    --keyring ./debian-archive-keyring.gpg \
