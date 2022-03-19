@@ -3,23 +3,23 @@
 PROFILE=$1
 OSCODE=$2
 
-if [ x${PROFILE} = x ]; then
+if [ "x${PROFILE}" = "x" ]; then
     echo "Usage: $0 PROFILE [oscode]" 1>&2;
     exit 1
 fi
 
-if [ ! -e profiles/${PROFILE}.conf ]; then
+if [ ! -e "profiles/${PROFILE}.conf" ]; then
     echo "Unknown profile: ${PROFILE}" 1>&2;
     exit 1
 fi
 
-if [ x${OSCODE} = x ]; then
-  OSCODE=`lsb_release -c | awk '{print $2}'`
+if [ "x${OSCODE}" = "x" ]; then
+    OSCODE="$(lsb_release -c | awk '{print $2}')"
   echo "Defaulted OSCODE to ${OSCODE}"
 fi
 
 
-if [ `id -u` -eq 0 ]; then
+if [ "$(id -u)" -eq 0 ]; then
     ROOT_CMDOPTS='--force-root'
 else
     ROOT_CMDOPTS=''
@@ -29,29 +29,14 @@ if [ -e profiles/default.preseed ]; then
     rm -f profiles/default.preseed
 fi
 
-if [ -e profiles/${PROFILE}.prerun ]; then
-   profiles/${PROFILE}.prerun
-   if [ $? -ne 0 ]; then
+if [ -e "profiles/${PROFILE}.prerun" ]; then
+   PRERUN="profiles/${PROFILE}.prerun"
+   if $PRERUN; then
        echo "profiles/${PROFILE}.prerun returned error. Aborting" 1>&2
        exit 1
    fi
 fi
 
-# Working around bug in simple-cdd by removing expired key for the wheezy
-# release.
-# -- https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=928703
-#if [ ! -f './debian-archive-keyring.gpg' ]; then
-#  wget http://ftp.de.debian.org/debian/pool/main/d/debian-archive-keyring/debian-archive-keyring_2019.1_all.deb
-#  rm -rf keys 2>&1 || true
-#  mkdir keys
-#  dpkg-deb -xv *.deb keys/
-#  cp ./keys/usr/share/keyrings/debian-archive-keyring.gpg .
-#  rm *.deb
-#  rm -rf keys
-#fi
-
-
 REMOVE_KEYBOARD_PROMPTS="--keyboard us --locale en_US.UTF-8"
-build-simple-cdd --conf profiles/${PROFILE}.conf \
-    --dist ${OSCODE} ${ROOT_CMDOPTS} ${REMOVE_KEYBOARD_PROMPTS}
-#    --keyring ./debian-archive-keyring.gpg \
+build-simple-cdd --conf "profiles/${PROFILE}.conf" \
+    --dist "${OSCODE}" "${ROOT_CMDOPTS}" "${REMOVE_KEYBOARD_PROMPTS}"
