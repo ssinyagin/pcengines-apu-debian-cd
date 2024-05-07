@@ -120,7 +120,7 @@ Create the CD image on the build machine:
 
 ## install prerequisites
 apt-get update
-apt-get install -y simple-cdd git xorriso lsb-release
+apt-get install -y simple-cdd git xorriso lsb-release mtools
 
 ## get our latest files
 mkdir /opt/pcengines
