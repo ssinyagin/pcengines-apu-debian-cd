@@ -8,6 +8,8 @@ This is a set of configuration files for building a Debian installation
 CD optimized for the APU platform of PC Engines:
 http://www.pcengines.ch/apu.htm
 
+As of 2024, the manufacturing of the APU hardware has been stopped.
+
 This installation is only intended for an mSATA drive on the APU
 board. If you plan to boot from SD card, use Voyage Linux instead:
 http://linux.voyage.hk/
@@ -99,9 +101,9 @@ SSD drive.
 
 !!! ALL EXISTING DATA ON THE DRIVE WILL BE LOST !!!
 
-The build machine needs to be Debian Stretch (Debian Jessie was
-supported up to commit f01e3e97). Other Debian versions or Ubuntu are
-not fully tested.
+Debian Bookworm caveat: you need to select "Install Debian" in the
+Grub menu manually. Also, the installation takes significantly longer
+than for previous releases.
 
 Both the build machine and the APU board need the Internet connection
 during the installation. The installer assumes that enp1s0 (marked as
@@ -158,7 +160,3 @@ Author
 Stanislav Sinyagin
 ssinyagin@k-open.com
 
-Donations
----------
-BTC: 18hG6hfnocrvr2Jn1TvSQRFywt6psxTEjM
-ETH: 0x6BF743E7F92DCa5CDf5C7F36BDe4cf76896336aB
