@@ -6,3 +6,4 @@ iw
 hdparm
 smartmontools
 dnsutils
+zstd
