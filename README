@@ -87,12 +87,6 @@ install your public SSH key in root's autorized_keys, or change the SSH
 daemon configuration.
 
 
-Binary releases
----------------
-
-64-bit installer ISO images are available at GitHub in Releases section:
-https://github.com/ssinyagin/pcengines-apu-debian-cd/releases
-
 
 Installation
 ------------
